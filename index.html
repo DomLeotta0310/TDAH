@@ -55,6 +55,7 @@ label{display:block;font-weight:700;font-size:.9rem;color:#2F4A3C;margin:14px 0 
 .mood{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .mood button{padding:9px 14px;border:1.5px solid #D9CDB8;background:#FBF7EF;border-radius:99px;font-family:inherit;font-size:.88rem;font-weight:600;color:#5C5C5C;cursor:pointer}
 .mood button.on{background:#2F4A3C;color:#fff;border-color:#2F4A3C}
+.salvo{text-align:center;font-size:.78rem;color:#8FAE8B;font-weight:600;min-height:16px;margin-top:6px}
 </style>
 </head>
 <body>
@@ -63,10 +64,10 @@ label{display:block;font-weight:700;font-size:.9rem;color:#2F4A3C;margin:14px 0 
 <section class="screen on" id="s-welcome">
 <div class="hero">
 <h1 class="title-hand">Um Livro com<span>TDAH</span></h1>
-<p class="tagline">Uma jornada de autoconhecimento.<br>Um capítulo por dia.</p>
+<p class="tagline" id="tagline">Uma jornada de autoconhecimento.<br>Um capítulo por dia.</p>
 <div class="book"></div>
-<p style="max-width:300px;margin:6px auto 18px">Você não precisa escrever sua história inteira hoje.<br>Vamos começar pela primeira página?</p>
-<button class="btn btn-primary" onclick="ir('s-ch1')">Começar minha jornada</button>
+<p style="max-width:300px;margin:6px auto 18px" id="msg-bemvindo">Você não precisa escrever sua história inteira hoje.<br>Vamos começar pela primeira página?</p>
+<button class="btn btn-primary" id="btn-iniciar" onclick="abrirJornada()">Começar minha jornada</button>
 <button class="btn btn-ghost" onclick="alert('Em breve.')">Já tenho cadastro</button>
 <div class="features">
 <div class="feat card"><span class="tx">30 capítulos interativos</span></div>
@@ -113,11 +114,32 @@ function ler(chave){
 }
 function guardarCampo(id){
   var el=document.getElementById(id);
-  if(el){guardar(id,el.value);}
+  if(el){guardar(id,el.value);mostrarSalvo();}
+}
+function mostrarSalvo(){
+  var el=document.getElementById('svinfo');
+  if(!el){
+    el=document.createElement('div');
+    el.id='svinfo';
+    el.className='salvo';
+    var c=document.getElementById('corpo');
+    if(c){c.appendChild(el);}
+  }
+  el.textContent='Salvo automaticamente';
+  setTimeout(function(){if(el){el.textContent='';}},1500);
 }
 
-function proxima(){ if(pagina<TOTAL){pagina++;render();} }
-function anterior(){ if(pagina>1){pagina--;render();} }
+function proxima(){ if(pagina<TOTAL){pagina++;guardar('paginaAtual',pagina);render();} }
+function anterior(){ if(pagina>1){pagina--;guardar('paginaAtual',pagina);render();} }
+
+function abrirJornada(){
+  var sv={};
+  try{sv=JSON.parse(localStorage.getItem('ulctdah')||'{}');}catch(e){}
+  var p=sv.paginaAtual||1;
+  if(p>1&&p<=TOTAL){pagina=p;}else{pagina=1;}
+  ir('s-ch1');
+  render();
+}
 
 function render(){
   var s=document.getElementById('step');
@@ -126,13 +148,11 @@ function render(){
   if(!c){return;}
   c.innerHTML=construir(pagina);
   window.scrollTo(0,0);
-  if(pagina===5||pagina===6||pagina===9||pagina===10||pagina===11){
-    var ids=['r5','r6','r9','r10','r11'];
-    for(var i=0;i<ids.length;i++){
-      var el=document.getElementById(ids[i]);
-      if(el){
-        el.addEventListener('input',function(){guardarCampo(this.id);});
-      }
+  var ids=['r5','r6','r9','r10','r11'];
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);
+    if(el){
+      el.addEventListener('input',function(){guardarCampo(this.id);});
     }
   }
 }
@@ -366,7 +386,19 @@ function responder(i){
   }
 }
 
+function verificarProgresso(){
+  var sv={};
+  try{sv=JSON.parse(localStorage.getItem('ulctdah')||'{}');}catch(e){}
+  if(sv.paginaAtual&&sv.paginaAtual>1){
+    var bt=document.getElementById('btn-iniciar');
+    if(bt){bt.textContent='Continuar minha jornada';}
+    var tg=document.getElementById('tagline');
+    if(tg){tg.innerHTML='Bem-vindo de volta.<br>Vamos continuar?';}
+  }
+}
+
 render();
+verificarProgresso();
 </script>
 </body>
 </html>
