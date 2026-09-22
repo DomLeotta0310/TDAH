@@ -1,0 +1,464 @@
+index.html<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F4EDE1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Um Livro com TDAH">
+<title>Um Livro com TDAH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+--cream:#F4EDE1;--cream2:#EDE3D2;--paper:#FBF7EF;
+--green:#2F4A3C;--green2:#3E6450;--green-soft:#8FAE8B;
+--orange:#C2703A;--orange-soft:#E8A87C;
+--ink:#2B2B2B;--ink2:#5C5C5C;--line:#D9CDB8;
+--radius:18px;--radius-sm:12px;
+}
+html,body{height:100%}
+body{
+font-family:'Nunito',system-ui,-apple-system,sans-serif;
+background:var(--cream);color:var(--ink);
+line-height:1.55;font-size:16px;
+display:flex;flex-direction:column;
+min-height:100vh;overflow-x:hidden;
+}
+.hand{font-family:'Caveat',cursive;font-weight:700}
+.wrap{max-width:520px;margin:0 auto;width:100%;padding:0 18px;flex:1;display:flex;flex-direction:column}
+.screen{display:none;flex:1;flex-direction:column;padding:22px 0 32px;animation:fade .35s ease}
+.screen.on{display:flex}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1,h2,h3{font-weight:800;line-height:1.25;color:var(--green)}
+h1{font-size:1.9rem}h2{font-size:1.45rem;margin-bottom:8px}h3{font-size:1.1rem}
+p{color:var(--ink2);margin-bottom:14px}
+.sub{color:var(--ink2);font-size:.98rem}
+.small{font-size:.82rem;color:#8a7f6e}
+.center{text-align:center}
+.mt{margin-top:14px}.mt2{margin-top:26px}
+.btn{
+display:flex;align-items:center;justify-content:center;gap:8px;
+width:100%;padding:16px;border:none;border-radius:var(--radius);
+font-family:inherit;font-size:1.02rem;font-weight:700;
+cursor:pointer;transition:transform .12s,filter .12s;
+margin-top:12px;letter-spacing:.2px;
+}
+.btn:active{transform:scale(.98);filter:brightness(.95)}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 6px 16px rgba(47,74,60,.22)}
+.btn-cta{background:var(--orange);color:#fff;box-shadow:0 6px 16px rgba(194,112,58,.28)}
+.btn-ghost{background:transparent;color:var(--green);border:1.5px solid var(--line)}
+.btn-soft{background:var(--cream2);color:var(--green)}
+.card{
+background:var(--paper);border:1px solid var(--line);
+border-radius:var(--radius);padding:18px;margin-bottom:14px;
+box-shadow:0 2px 10px rgba(0,0,0,.03);
+}
+.card-tip{background:#F8EFDD;border-color:#E8D9BB}
+.quote{
+font-family:'Caveat',cursive;font-size:1.35rem;font-weight:700;
+color:var(--green);text-align:center;padding:16px 12px;
+background:#F8EFDD;border-radius:var(--radius);margin:14px 0;
+}
+.hero{
+flex:1;display:flex;flex-direction:column;align-items:center;
+justify-content:center;text-align:center;padding:20px 0;
+}
+.book{
+width:130px;height:170px;margin:20px auto 26px;
+background:linear-gradient(135deg,#3E6450,#2F4A3C);
+border-radius:8px 14px 14px 8px;position:relative;
+box-shadow:0 14px 28px rgba(47,74,60,.28),inset 0 0 0 2px rgba(255,255,255,.06);
+}
+.book::before{
+content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;
+background:rgba(255,255,255,.18);
+}
+.book::after{
+content:'Um Livro com TDAH';position:absolute;inset:0;
+display:flex;align-items:center;justify-content:center;
+color:#E8DCC4;font-family:'Caveat',cursive;font-weight:700;
+font-size:1.15rem;padding:20px;text-align:center;line-height:1.2;
+}
+.title-hand{font-family:'Caveat',cursive;font-size:2.2rem;font-weight:700;color:var(--ink);line-height:1}
+.title-hand span{color:var(--green);display:block;font-size:3rem}
+.tagline{color:var(--ink2);font-size:.96rem;margin:10px 0 4px}
+.features{display:flex;gap:10px;margin-top:22px;width:100%}
+.feat{flex:1;text-align:center;padding:12px 6px}
+.feat .ic{font-size:1.5rem;display:block;margin-bottom:6px}
+.feat .tx{font-size:.72rem;color:var(--ink2);font-weight:600;line-height:1.25}
+.footer-note{text-align:center;font-size:.7rem;color:#9a8f7e;padding:18px 10px 8px;line-height:1.4}
+.bar{height:6px;background:var(--cream2);border-radius:99px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green-soft),var(--green));border-radius:99px;transition:width .4s ease}
+textarea,input[type=text],input[type=email],input[type=tel],input[type=password]{
+width:100%;padding:14px;border:1.5px solid var(--line);border-radius:var(--radius-sm);
+font-family:inherit;font-size:1rem;background:#fff;color:var(--ink);resize:vertical;
+}
+textarea:focus,input:focus{outline:none;border-color:var(--green-soft)}
+textarea{min-height:120px;line-height:1.5}
+label{display:block;font-weight:700;font-size:.9rem;color:var(--green);margin:14px 0 6px}
+.opt{
+display:flex;align-items:flex-start;gap:10px;padding:14px;
+background:var(--paper);border:1.5px solid var(--line);border-radius:var(--radius-sm);
+margin-bottom:10px;cursor:pointer;transition:all .15s;
+}
+.opt.sel{border-color:var(--green);background:#EEF3EC}
+.opt .box{
+width:22px;height:22px;border:2px solid var(--line);border-radius:6px;
+flex-shrink:0;display:flex;align-items:center;justify-content:center;
+background:#fff;font-weight:800;color:#fff;font-size:.85rem;
+}
+.opt.sel .box{background:var(--green);border-color:var(--green)}
+.opt .tx{font-size:.95rem;color:var(--ink);font-weight:600}
+.quiz-opt{
+display:block;width:100%;text-align:left;padding:15px;margin-bottom:10px;
+background:var(--paper);border:1.5px solid var(--line);border-radius:var(--radius-sm);
+font-family:inherit;font-size:.98rem;font-weight:600;color:var(--ink);cursor:pointer;
+}
+.quiz-opt.ok{border-color:var(--green);background:#E7F0E6}
+.quiz-opt.no{border-color:#C98B7A;background:#F6E5E0}
+.fb{padding:14px;border-radius:var(--radius-sm);margin-top:6px;font-size:.94rem;font-weight:600}
+.fb.ok{background:#E7F0E6;color:#2F4A3C}
+.fb.no{background:#F6E5E0;color:#8B4536}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px}
+.back{
+background:none;border:none;font-size:1.5rem;color:var(--green);
+cursor:pointer;padding:6px 10px;font-family:inherit;line-height:1;
+}
+.step{font-size:.8rem;font-weight:700;color:var(--green);background:#E8E0CF;padding:5px 12px;border-radius:99px}
+.nav{
+position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--line);
+display:flex;justify-content:space-around;padding:8px 0 max(8px,env(safe-area-inset-bottom));
+margin:0 -18px;padding-left:18px;padding-right:18px;
+}
+.nav div{flex:1;text-align:center;font-size:.7rem;color:#9a8f7e;font-weight:700;padding:6px 0;cursor:pointer}
+.nav div.on{color:var(--green)}
+.nav div .ic{display:block;font-size:1.3rem;margin-bottom:2px}
+.hr{height:1px;background:var(--line);margin:16px 0;border:none}
+.mood{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.mood button{
+padding:9px 14px;border:1.5px solid var(--line);background:var(--paper);
+border-radius:99px;font-family:inherit;font-size:.88rem;font-weight:600;
+color:var(--ink2);cursor:pointer;
+}
+.mood button.on{background:var(--green);color:#fff;border-color:var(--green)}
+.saveinfo{font-size:.78rem;color:var(--green-soft);text-align:center;margin-top:8px;font-weight:600;min-height:18px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+
+  <!-- WELCOME -->
+  <section class="screen on" id="s-welcome">
+    <div class="hero">
+      <h1 class="title-hand">Um Livro com<span>TDAH</span></h1>
+      <p class="tagline">Uma jornada de autoconhecimento.<br>Um capítulo por dia.</p>
+      <div class="book"></div>
+      <p style="max-width:300px;margin:6px auto 18px">
+        Você não precisa escrever sua história inteira hoje.<br>Vamos começar pela primeira página?
+      </p>
+      <button class="btn btn-primary" onclick="go('s-ch1')">Começar minha jornada</button>
+      <button class="btn btn-ghost" onclick="alert('Em breve.')">Já tenho cadastro</button>
+      <div class="features">
+        <div class="feat"><span class="ic">📖</span><span class="tx">30 capítulos interativos</span></div>
+        <div class="feat"><span class="ic">🌱</span><span class="tx">No seu ritmo</span></div>
+        <div class="feat"><span class="ic">🤍</span><span class="tx">Acolhimento e aprendizado</span></div>
+      </div>
+    </div>
+    <p class="footer-note">Aplicativo gratuito, educativo. Não substitui acompanhamento profissional.</p>
+  </section>
+
+  <!-- CHAPTER 1 -->
+  <section class="screen" id="s-ch1">
+    <div class="topbar">
+      <button class="back" onclick="go('s-welcome')">←</button>
+      <span class="step" id="step">Página 1 de 13</span>
+      <span style="width:34px"></span>
+    </div>
+    <div id="ch1-body" style="flex:1"></div>
+    <div class="nav">
+      <div class="on"><span class="ic">🏠</span>Início</div>
+      <div><span class="ic">📖</span>Capítulos</div>
+      <div><span class="ic">✍️</span>Diário</div>
+      <div><span class="ic">📕</span>Livro</div>
+      <div><span class="ic">👤</span>Perfil</div>
+    </div>
+  </section>
+
+</div>
+<script>
+const $=id=>document.getElementById(id);
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0);}
+
+/* ---------- STORAGE ---------- */
+const KEY='ulctdah_v1';
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
+function save(o){localStorage.setItem(KEY,JSON.stringify(Object.assign(load(),o)))}
+function get(k){return load()[k]||''}
+
+/* ---------- CHAPTER 1 ---------- */
+let p=1;const TOTAL=13;
+
+const pages=[
+ // P1
+ ()=>`
+  <div class="card card-tip center" style="padding:28px 18px">
+   <p class="small" style="letter-spacing:2px;font-weight:800">CAPÍTULO 1</p>
+   <h1 class="hand" style="font-size:2.6rem;margin:6px 0">A PRIMEIRA PÁGINA</h1>
+   <p style="color:var(--ink2)">Toda história começa em algum lugar.</p>
+   <div style="font-size:3rem;margin:20px 0">📖</div>
+   <p>Hoje você não precisa encontrar todas as respostas.<br>Só precisa começar a escrever a sua história.</p>
+  </div>
+  <button class="btn btn-cta" onclick="next()">Começar o capítulo</button>
+ `,
+ // P2
+ ()=>`
+  <h2>Que bom que você chegou até aqui.</h2>
+  <p>Talvez você tenha começado esta jornada porque deseja compreender melhor o TDAH.</p>
+  <p>Talvez algumas situações do seu cotidiano despertem dúvidas.</p>
+  <p>Ou talvez você simplesmente queira reservar um tempo para conhecer melhor a si mesmo.</p>
+  <p>Independentemente do motivo, este espaço foi criado para que você possa aprender, refletir e registrar suas próprias experiências.</p>
+  <p>Você não precisa escrever bonito. Não precisa encontrar a resposta perfeita. E não precisa terminar tudo de uma vez.</p>
+  <p><strong>Este livro será construído com as suas palavras, no seu ritmo.</strong></p>
+  <div class="quote">"Sua história não precisa ser perfeita para merecer ser contada."</div>
+  <button class="btn btn-primary" onclick="next()">Continuar</button>
+ `,
+ // P3
+ ()=>`
+  <h2>Um livro diferente.</h2>
+  <p>Ao longo desta jornada, você encontrará 30 capítulos.</p>
+  <p>Cada capítulo apresentará um tema relacionado ao TDAH, ao cotidiano e ao autoconhecimento.</p>
+  <p>Você poderá ler pequenos textos, responder a perguntas, experimentar desafios e registrar suas experiências.</p>
+  <p>Se precisar fazer uma pausa, poderá voltar depois. Suas respostas ficarão guardadas na sua área pessoal.</p>
+  <p>Ao concluir os 30 capítulos, você poderá escolher quais registros deseja reunir em um livro personalizado.</p>
+  <p><strong>O resultado será uma história escrita por você.</strong></p>
+  <div class="features" style="margin-top:18px">
+   <div class="feat card" style="padding:14px 6px"><span class="ic">📖</span><span class="tx">LER<br>textos educativos</span></div>
+   <div class="feat card" style="padding:14px 6px"><span class="ic">🤔</span><span class="tx">REFLETIR<br>sobre você</span></div>
+  </div>
+  <div class="features">
+   <div class="feat card" style="padding:14px 6px"><span class="ic">✨</span><span class="tx">EXPERIMENTAR<br>desafios simples</span></div>
+   <div class="feat card" style="padding:14px 6px"><span class="ic">✍️</span><span class="tx">ESCREVER<br>sua história</span></div>
+  </div>
+  <button class="btn btn-primary mt" onclick="next()">Entendi, vamos continuar</button>
+ `,
+ // P4
+ ()=>`
+  <h2>Aprender sobre si também envolve cuidado.</h2>
+  <p>O TDAH é uma condição do neurodesenvolvimento que pode envolver dificuldades persistentes relacionadas à atenção, à hiperatividade e à impulsividade.</p>
+  <p>Essas características podem se manifestar de maneiras diferentes em cada pessoa.</p>
+  <p>Ter dificuldades para se concentrar, organizar tarefas ou lembrar compromissos não significa, por si só, que alguém tenha TDAH.</p>
+  <p>A avaliação deve considerar a história da pessoa, a presença e a persistência dos sintomas, seu impacto no cotidiano e outras possíveis explicações.</p>
+  <div class="card card-tip">
+   <strong>Este aplicativo oferece informações educativas e atividades de reflexão.</strong>
+   <p style="margin:8px 0 0">Ele não realiza diagnósticos e não substitui avaliação ou acompanhamento médico, psicológico ou psiquiátrico.</p>
+  </div>
+  <p>Se você tem dúvidas sobre seus sintomas ou enfrenta dificuldades que prejudicam seu cotidiano, procure orientação de um profissional qualificado.</p>
+  <button class="btn btn-primary" onclick="next()">Li e compreendi</button>
+ `,
+ // P5
+ ()=>`
+  <h2>O que trouxe você até aqui?</h2>
+  <p>Cada pessoa chega a esta jornada por um motivo diferente. Talvez você esteja buscando informações. Talvez queira compreender situações que vive há muito tempo. Ou talvez ainda não saiba exatamente o que está procurando.</p>
+  <p><strong>Tudo bem começar com dúvidas.</strong></p>
+  <label>O que motivou você a começar esta jornada?</label>
+  <textarea id="r5" placeholder="Escreva com suas próprias palavras...">${get('r5')}</textarea>
+  <p class="small" style="margin-top:8px">Não existe resposta certa ou errada.</p>
+  <button class="btn btn-primary" onclick="saveR('r5');next()">Salvar e continuar</button>
+  <button class="btn btn-ghost" onclick="next()">Prefiro responder depois</button>
+ `,
+ // P6
+ ()=>`
+  <h2>Vamos nos conhecer um pouco?</h2>
+  <p>Antes de explorar os próximos capítulos, que tal escrever uma pequena apresentação sobre você?</p>
+  <p>Não é necessário contar toda a sua história. Escolha apenas o que se sentir confortável para compartilhar neste espaço privado.</p>
+  <div class="card">
+   <strong>Algumas perguntas para te ajudar:</strong>
+   <p style="margin:8px 0 0">• Como você gostaria de se apresentar?<br>• O que gosta de fazer?<br>• O que considera importante na sua vida?<br>• O que gostaria de aprender sobre si mesmo?</p>
+  </div>
+  <textarea id="r6" placeholder="Você pode responder na ordem que preferir ou escrever um texto único." style="min-height:160px">${get('r6')}</textarea>
+  <button class="btn btn-primary mt" onclick="saveR('r6');next()">Salvar minha apresentação</button>
+  <button class="btn btn-ghost" onclick="next()">Responder depois</button>
+ `,
+ // P7
+ (()=>{const opts=["Entender melhor o TDAH","Conhecer estratégias de organização","Aprender sobre atenção e distrações","Refletir sobre minhas emoções","Melhorar minha rotina","Compreender minhas relações pessoais","Registrar minha história","Ainda não sei exatamente","Outro objetivo"];
+  return ()=>{
+   const sel=load().r7||[];
+   return `
+  <h2>O que você espera encontrar nesta jornada?</h2>
+  <p>Selecione os assuntos que mais despertam seu interesse neste momento.</p>
+  ${opts.map((o,i)=>`<div class="opt ${sel.includes(i)?'sel':''}" onclick="tog(${i},this)"><div class="box">${sel.includes(i)?'✓':''}</div><div class="tx">${o}</div></div>`).join('')}
+  <button class="btn btn-primary mt" onclick="saveR7()">Salvar minhas escolhas</button>
+  `;
+ })()
+ ,
+ // P8
+ (()=>{
+  const qs=[
+   {q:"Qual é o principal objetivo do aplicativo Um Livro com TDAH?",a:["Realizar um diagnóstico de TDAH.","Oferecer uma jornada educativa de reflexão e autoconhecimento.","Substituir consultas com profissionais de saúde."],c:1,e:"O aplicativo oferece informações educativas, atividades de reflexão e espaço para registros pessoais. Ele não realiza diagnósticos nem substitui acompanhamento profissional."},
+   {q:"O que acontece se você precisar interromper um capítulo?",a:["Perde todas as respostas e precisa recomeçar.","É obrigado a terminar no mesmo dia.","Pode salvar o progresso e continuar depois."],c:2,e:"A jornada foi planejada para permitir pausas. Você poderá retornar ao capítulo e continuar de onde parou."},
+   {q:"Quem escreve os registros pessoais que formarão o livro final?",a:["O próprio participante.","O administrador do aplicativo.","O aplicativo, inventando uma história."],c:0,e:"O livro final será formado pelos registros escolhidos pelo próprio participante. O aplicativo poderá organizá-los visualmente, mas não inventará experiências pessoais."}
+  ];
+  window.qIdx=0;
+  window.renderQuiz=()=>{
+   if(qIdx>=qs.length){
+    $('quiz-area').innerHTML=`<div class="fb ok" style="padding:20px;text-align:center">Muito bem! Agora você já conhece os primeiros passos da sua jornada.</div><button class="btn btn-primary mt" onclick="next()">Continuar</button>`;
+    return;
+   }
+   const q=qs[qIdx];
+   $('quiz-area').innerHTML=`
+    <p class="small" style="font-weight:800">Pergunta ${qIdx+1} de ${qs.length}</p>
+    <h3 style="margin:8px 0 14px">${q.q}</h3>
+    ${q.a.map((a,i)=>`<button class="quiz-opt" data-i="${i}" onclick="ansQuiz(${i})">${String.fromCharCode(65+i)}) ${a}</button>`).join('')}
+    <div id="quiz-fb"></div>`;
+  };
+  window.ansQuiz=(i)=>{
+   const q=qs[qIdx];
+   document.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
+   const fb=$('quiz-fb');
+   if(i===q.c){
+    document.querySelectorAll('.quiz-opt')[i].classList.add('ok');
+    fb.innerHTML=`<div class="fb ok">✓ Correto!<br>${q.e}</div><button class="btn btn-primary mt" onclick="qIdx++;renderQuiz()">Próxima</button>`;
+   } else {
+    document.querySelectorAll('.quiz-opt')[i].classList.add('no');
+    fb.innerHTML=`<div class="fb no">Ainda não. Tente novamente.</div><button class="btn btn-soft mt" onclick="renderQuiz()">Tentar de novo</button>`;
+   }
+  };
+  return ()=>`
+   <h2>Vamos conferir o que aprendemos?</h2>
+   <p>Este pequeno desafio não é uma prova. É apenas uma oportunidade de revisar algumas informações importantes.</p>
+   <div id="quiz-area"></div>
+   <button class="btn btn-primary mt" onclick="qIdx=0;renderQuiz()">Começar o quiz</button>
+  `;
+ })(),
+ // P9
+ ()=>`
+  <h2>Seu primeiro desafio: escrever para você.</h2>
+  <p>Imagine que este livro seja um espaço onde você poderá conversar consigo mesmo ao longo dos próximos capítulos.</p>
+  <p>Hoje, seu desafio será escrever uma pequena mensagem para a pessoa que está começando esta jornada: <strong>você</strong>.</p>
+  <p>Não precisa ser uma mensagem longa. Pode ser um desejo, uma pergunta, uma expectativa ou simplesmente algumas palavras sobre como está se sentindo.</p>
+  <label>O que você gostaria de dizer a si mesmo neste primeiro dia?</label>
+  <textarea id="r9" style="min-height:140px">${get('r9')}</textarea>
+  <button class="btn btn-cta mt" onclick="saveR('r9');save({desafio:'concluido'});next()">Concluí meu desafio</button>
+  <button class="btn btn-ghost" onclick="saveR('r9');save({desafio:'adiado'});next()">Quero fazer depois</button>
+ `,
+ // P10
+ ()=>`
+  <h2>Uma mensagem para o seu eu do futuro.</h2>
+  <p>Daqui a alguns capítulos, você poderá olhar para trás e perceber quais experiências e descobertas foram importantes para você.</p>
+  <p>Que tal deixar uma mensagem para ler novamente no último capítulo?</p>
+  <label>O que você gostaria de dizer à pessoa que estará lendo esta mensagem no Capítulo 30?</label>
+  <textarea id="r10" style="min-height:140px">${get('r10')}</textarea>
+  <button class="btn btn-primary mt" onclick="saveR('r10');save({capsula:true});next()">Guardar minha mensagem</button>
+  <button class="btn btn-ghost" onclick="saveR('r10');next()">Fazer depois</button>
+ `,
+ // P11
+ (()=>{const m=["Animado","Curioso","Tranquilo","Cansado","Inseguro","Não sei dizer","Prefiro não responder"];
+  return ()=>{
+   const cur=load().humor||'';
+   return `
+  <h2>Como foi começar?</h2>
+  <p>Antes de encerrar este capítulo, reserve um momento para registrar como foi sua experiência. Você não precisa escrever muito.</p>
+  <div class="card">
+   <strong>Perguntas para o diário:</strong>
+   <p style="margin:8px 0 0">• Como me senti ao começar esta jornada?<br>• O que mais chamou minha atenção neste primeiro capítulo?<br>• Existe algo que eu gostaria de lembrar sobre o dia de hoje?</p>
+  </div>
+  <textarea id="r11" style="min-height:150px">${get('r11')}</textarea>
+  <label>Como você está se sentindo agora?</label>
+  <div class="mood">
+   ${m.map(x=>`<button class="${cur===x?'on':''}" onclick="pickMood('${x}',this)">${x}</button>`).join('')}
+  </div>
+  <button class="btn btn-primary mt" onclick="saveR('r11');next()">Salvar no meu diário</button>
+  `;
+ })()
+ ,
+ // P12
+ ()=>`
+  <div class="card card-tip center" style="padding:34px 20px">
+   <p class="small" style="letter-spacing:2px;font-weight:800">ANTES DE VIRAR A PÁGINA...</p>
+   <h2 style="margin-top:14px">Uma pausa para sorrir</h2>
+   <div style="font-size:3.4rem;margin:20px 0">🔖</div>
+   <p>Você abriu um livro para conhecer melhor sua própria história.</p>
+   <p>E a primeira descoberta foi esta:</p>
+   <p style="color:var(--green);font-weight:700">Não é necessário escrever os 30 capítulos de uma vez.</p>
+   <p>Ainda bem, porque até os melhores livros precisam de um marcador de página!</p>
+  </div>
+  <button class="btn btn-primary" onclick="next()">Continuar</button>
+ `,
+ // P13
+ ()=>{
+  save({ch1:true,fimCh1:new Date().toISOString()});
+  return `
+  <div class="center" style="padding:14px 0">
+   <div style="font-size:2.6rem">✨</div>
+   <h1 class="hand" style="font-size:2rem;margin-top:8px">Sua primeira página está escrita.</h1>
+  </div>
+  <p>Você chegou ao final do primeiro capítulo.</p>
+  <p>Hoje, conheceu a proposta desta jornada, refletiu sobre o que trouxe você até aqui e teve a oportunidade de registrar suas primeiras palavras.</p>
+  <p>Talvez tenha escrito bastante. Talvez tenha respondido apenas algumas perguntas. O importante é que este espaço continuará disponível para você.</p>
+  <p><strong>Sua história não precisa ser contada inteira em um único dia.</strong></p>
+  <div class="quote">Pequenos passos também fazem parte de grandes histórias.</div>
+  <div class="card">
+   <p class="small" style="font-weight:800;letter-spacing:1px">CAPÍTULO 1 DE 30</p>
+   <h3 style="margin:4px 0 8px">A Primeira Página</h3>
+   <p class="small">Situação: <strong style="color:var(--green)">Concluído ✓</strong></p>
+   <div class="bar"><i style="width:3.3%"></i></div>
+   <p class="small" style="margin-top:6px">Progresso: 1 de 30 capítulos</p>
+  </div>
+  <button class="btn btn-primary" onclick="go('s-welcome')">Voltar para minha jornada</button>
+  <button class="btn btn-ghost" onclick="alert('O Capítulo 2 será liberado em breve.')">Conhecer o Capítulo 2</button>
+ `;
+ }
+];
+
+function renderCh1(){
+ $('step').textContent=`Página ${p} de ${TOTAL}`;
+ $('ch1-body').innerHTML=pages[p-1]();
+ if(p===8) renderQuiz();
+ if(p===5) setTimeout(bindAuto,50);
+ if(p===6) setTimeout(bindAuto,50);
+ if(p===9) setTimeout(bindAuto,50);
+ if(p===10) setTimeout(bindAuto,50);
+ if(p===11) setTimeout(bindAuto,50);
+ window.scrollTo(0,0);
+}
+function next(){if(p<TOTAL){p++;renderCh1()}}
+function prev(){if(p>1){p--;renderCh1()}}
+function saveR(id){const el=$(id);if(el) save({[id]:el.value});}
+function bindAuto(){
+ ['r5','r6','r9','r10','r11'].forEach(id=>{
+  const el=$(id);if(!el)return;
+  el.addEventListener('input',()=>{save({[id]:el.value});showSaved();});
+ });
+}
+let saveT;
+function showSaved(){
+ const el=document.querySelector('.saveinfo');
+ if(!el){return;}
+ clearTimeout(saveT);
+ let info=document.getElementById('svinfo');
+ if(!info){info=document.createElement('div');info.id='svinfo';info.className='saveinfo';document.querySelector('#ch1-body').appendChild(info);}
+ info.textContent='✓ Salvo automaticamente';
+ saveT=setTimeout(()=>{info.textContent=''},1500);
+}
+function tog(i,el){
+ const cur=load().r7||[];
+ const k=cur.indexOf(i);
+ if(k>=0)cur.splice(k,1);else cur.push(i);
+ save({r7:cur});
+ el.classList.toggle('sel');
+ el.querySelector('.box').textContent=el.classList.contains('sel')?'✓':'';
+}
+function saveR7(){save({r7:load().r7||[]});next();}
+function pickMood(x,el){
+ document.querySelectorAll('.mood button').forEach(b=>b.classList.remove('on'));
+ el.classList.add('on');save({humor:x});
+}
+
+renderCh1();
+</script>
+</body>
+</html>
